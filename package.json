@@ -6,19 +6,24 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "trigger:dev": "trigger dev --profile test",
+    "trigger:deploy": "trigger deploy --profile test"
   },
   "dependencies": {
+    "@trigger.dev/sdk": "0.0.0-prerelease-20250228095546",
+    "next": "15.2.0",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0",
-    "next": "15.2.0"
+    "react-dom": "^19.0.0"
   },
   "devDependencies": {
-    "typescript": "^5",
+    "@tailwindcss/postcss": "^4",
+    "@trigger.dev/build": "0.0.0-prerelease-20250228095546",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
-    "@tailwindcss/postcss": "^4",
-    "tailwindcss": "^4"
+    "tailwindcss": "^4",
+    "typescript": "^5",
+    "trigger.dev": "0.0.0-prerelease-20250228095546"
   }
 }
