@@ -38,6 +38,7 @@ jobs:
           TRIGGER_VERSION: ${{ steps.deploy-trigger.outputs.deploymentVersion }}
 
       - name: Promote Trigger.dev Version
+        if: false
         run: npx trigger.dev promote $TRIGGER_VERSION -a https://test-cloud.trigger.dev
         env:
           TRIGGER_ACCESS_TOKEN: ${{ secrets.TRIGGER_ACCESS_TOKEN }}
