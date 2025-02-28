@@ -31,7 +31,7 @@ jobs:
           npx trigger.dev@0.0.0-prerelease-20250228112706 deploy -a https://test-cloud.trigger.dev --skip-promotion
 
       - name: Deploy to Vercel
-        run: npx vercel --yes --prod --env TRIGGER_VERSION=$TRIGGER_VERSION
+        run: npx vercel --yes --prod --env TRIGGER_VERSION=$TRIGGER_VERSION --token $VERCEL_TOKEN
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}  # Vercel token from secrets
 
