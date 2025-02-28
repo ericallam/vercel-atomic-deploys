@@ -29,3 +29,13 @@ jobs:
           TRIGGER_ACCESS_TOKEN: ${{ secrets.TRIGGER_ACCESS_TOKEN }}
         run: |
           npx trigger.dev@0.0.0-prerelease-20250228112706 deploy -a https://test-cloud.trigger.dev --skip-promotion
+
+      - name: Deploy to Vercel
+        run: npx vercel --prod --env TRIGGER_VERSION=$TRIGGER_VERSION
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}  # Vercel token from secrets
+
+      - name: Promote Trigger.dev Version
+        run: npx trigger.dev promote $TRIGGER_VERSION
+        env:
+          TRIGGER_ACCESS_TOKEN: ${{ secrets.TRIGGER_ACCESS_TOKEN }}
