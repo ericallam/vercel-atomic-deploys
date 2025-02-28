@@ -25,10 +25,21 @@ jobs:
         run: npm install
 
       - name: 🚀 Deploy Trigger.dev
+        id: deploy-trigger
         env:
           TRIGGER_ACCESS_TOKEN: ${{ secrets.TRIGGER_ACCESS_TOKEN }}
         run: |
           npx trigger.dev@0.0.0-prerelease-20250228112706 deploy -a https://test-cloud.trigger.dev --skip-promotion
+
+      - name: Get Trigger.dev Version
+        id: my-step
+        run: |
+          echo "Deployed version: $TRIGGER_VERSION"
+      
+      - name: Debug - Print all outputs deploying Trigger.dev
+        run: |
+          echo "All outputs from deploy-trigger:"
+          echo '${{ toJSON(steps.deploy-trigger.outputs) }}'
 
       - name: Deploy to Vercel
         run: npx vercel --yes --prod --env TRIGGER_VERSION=$TRIGGER_VERSION --token $VERCEL_TOKEN
@@ -36,6 +47,6 @@ jobs:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}  # Vercel token from secrets
 
       - name: Promote Trigger.dev Version
-        run: npx trigger.dev promote $TRIGGER_VERSION
+        run: npx trigger.dev promote $TRIGGER_VERSION -a https://test-cloud.trigger.dev
         env:
           TRIGGER_ACCESS_TOKEN: ${{ secrets.TRIGGER_ACCESS_TOKEN }}
