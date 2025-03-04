@@ -45,4 +45,4 @@ jobs:
         env:
           VERCEL_DEPLOYMENT_ID: ${{ steps.wait-for-vercel.outputs.deployment-id }}
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-          VERCEL_PROJECT_NAME: "ericapiheroruns-projects"
+          VERCEL_SCOPE_NAME: "ericapiheroruns-projects"
