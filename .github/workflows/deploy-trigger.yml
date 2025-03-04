@@ -31,6 +31,7 @@ jobs:
           project-id: ${{ secrets.VERCEL_PROJECT_ID }}
           token:  ${{ secrets.VERCEL_TOKEN }}
           sha: ${{ github.sha }}
+          delay: "30"
 
       - name: 🚀 Deploy Trigger.dev
         id: deploy-trigger
@@ -40,7 +41,7 @@ jobs:
           npx trigger.dev@0.0.0-prerelease-20250228112706 deploy -a https://test-cloud.trigger.dev
 
       - name: Promote Vercel deploy
-        run: npx vercel promote $VERCEL_DEPLOYMENT_ID --token $VERCEL_TOKEN
+        run: npx vercel promote --yes $VERCEL_DEPLOYMENT_ID --token $VERCEL_TOKEN
         env:
           VERCEL_DEPLOYMENT_ID: ${{ steps.wait-for-vercel.outputs.deploymentId }}
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
