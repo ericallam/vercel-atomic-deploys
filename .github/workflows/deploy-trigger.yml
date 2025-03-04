@@ -23,21 +23,24 @@ jobs:
 
       - name: Install dependencies
         run: npm install
+      
+      - name: Wait for vercel deployment (push)
+        id: wait-for-vercel
+        uses: tj-actions/vercel-wait@v1
+        with:
+          project-id: ${{ secrets.VERCEL_PROJECT_ID }}
+          token:  ${{ secrets.VERCEL_TOKEN }}
+          sha: ${{ github.sha }}
 
       - name: 🚀 Deploy Trigger.dev
         id: deploy-trigger
         env:
           TRIGGER_ACCESS_TOKEN: ${{ secrets.TRIGGER_ACCESS_TOKEN }}
         run: |
-          npx trigger.dev@0.0.0-prerelease-20250228112706 deploy -a https://test-cloud.trigger.dev --skip-promotion
+          npx trigger.dev@0.0.0-prerelease-20250228112706 deploy -a https://test-cloud.trigger.dev
 
-      - name: Deploy to Vercel
-        run: npx vercel --yes --prod -e TRIGGER_VERSION=$TRIGGER_VERSION --token $VERCEL_TOKEN
+      - name: Promote Vercel deploy
+        run: npx vercel promote $VERCEL_DEPLOYMENT_ID --token $VERCEL_TOKEN
         env:
-          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}  # Vercel token from secrets
-          TRIGGER_VERSION: ${{ steps.deploy-trigger.outputs.deploymentVersion }}
-
-      - name: Promote Trigger.dev Version
-        run: npx trigger.dev@0.0.0-prerelease-20250228112706 promote $TRIGGER_VERSION -a https://test-cloud.trigger.dev
-        env:
-          TRIGGER_ACCESS_TOKEN: ${{ secrets.TRIGGER_ACCESS_TOKEN }}
+          VERCEL_DEPLOYMENT_ID: ${{ steps.wait-for-vercel.outputs.deploymentId }}
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
