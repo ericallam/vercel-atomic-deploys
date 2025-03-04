@@ -41,7 +41,8 @@ jobs:
           npx trigger.dev@0.0.0-prerelease-20250228112706 deploy -a https://test-cloud.trigger.dev
 
       - name: Promote Vercel deploy
-        run: npx vercel promote $VERCEL_DEPLOYMENT_ID --yes --token $VERCEL_TOKEN
+        run: npx vercel promote $VERCEL_DEPLOYMENT_ID --yes --token $VERCEL_TOKEN --scope $VERCEL_SCOPE_NAME
         env:
           VERCEL_DEPLOYMENT_ID: ${{ steps.wait-for-vercel.outputs.deployment-id }}
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          VERCEL_PROJECT_NAME: "ericapiheroruns-projects"
