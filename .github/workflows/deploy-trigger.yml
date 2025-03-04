@@ -26,7 +26,7 @@ jobs:
       
       - name: Wait for vercel deployment (push)
         id: wait-for-vercel
-        uses: ericallam/vercel-wait@v1
+        uses: ericallam/vercel-wait@main
         with:
           project-id: ${{ secrets.VERCEL_PROJECT_ID }}
           token:  ${{ secrets.VERCEL_TOKEN }}
